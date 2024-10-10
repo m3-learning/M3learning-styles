@@ -1,0 +1,21 @@
+# .env.template
+DOC_PROJECT_NAME=M3learning-styles
+COPYRIGHT_YEAR=2024
+HTML_THEME=pydata_sphinx_theme
+CUSTOM_CSS='custom.css'
+
+# Page layout settings
+SIDEBAR_WIDTH=300px
+PAGE_WIDTH=100%  # Set to 100% for maximum width
+SHOW_NAV_LEVEL=4
+ICON_LINKS='[
+    {
+        "name": "GitHub",
+        "url": "https://github.com/your-org/your-repo",
+        "icon": "fab fa-github-square"
+    },
+]'
+LOGO_IMAGES='{
+    "image_light": "_static/Drexel_blue_Logo_square_Light.png",
+    "image_dark": "_static/Drexel_blue_Logo_square_Dark.png"
+}'

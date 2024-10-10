@@ -18,7 +18,7 @@ import json
 # -- Path setup --------------------------------------------------------------
 
 __location__ = os.path.dirname(__file__)
-load_dotenv(os.path.join(__location__, "../.env"))
+load_dotenv(os.path.join(__location__, "../template_env"))
 
 # Define function to pull the latest customizations
 def pull_customizations():
@@ -52,7 +52,9 @@ project = os.getenv("DOC_PROJECT_NAME", "Default Project")
 copyright = f"{os.getenv('COPYRIGHT_YEAR', '2024')}, {project}"
 
 # The Theme to use for HTML and HTML Help pages
-html_theme = os.getenv("HTML_THEME", "sphinx_rtd_theme")
+html_theme = os.getenv("HTML_THEME", "pydata_sphinx_theme")
+
+custom_css = os.getenv("CUSTOM_CSS", "custom.css")
 
 # The location of the module directory
 module_dir = os.getenv("MODULE_DIR", "m3learning_styles")
@@ -198,15 +200,23 @@ todo_emit_warnings = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "alabaster"
+html_theme = html_theme
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
+# Set html_theme_options with environment variables
+# Define html_theme_options with values from environment variables
 html_theme_options = {
-    "sidebar_width": "300px",
-    "page_width": "1200px"
+    "sidebar_width": os.getenv("SIDEBAR_WIDTH"),
+    "page_width": os.getenv("PAGE_WIDTH"),
+    "show_nav_level": int(os.getenv("SHOW_NAV_LEVEL")) if os.getenv("SHOW_NAV_LEVEL") else None,
+    "icon_links": json.loads(os.getenv("ICON_LINKS")) if os.getenv("ICON_LINKS") else None,
+    "logo": json.loads(os.getenv("LOGO_IMAGES")) if os.getenv("LOGO_IMAGES") else None
 }
+
+# Remove keys with None values
+html_theme_options = {key: value for key, value in html_theme_options.items() if value is not None}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -232,9 +242,13 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+html_css_files = [
+    "custom.css",
+]
+
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
